@@ -1,13 +1,11 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { purple } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
 
 function UserData(props) {
   return (
     <React.Fragment>
-      <Avatar alt="Remy Sharp" sx={{ width: 90, height: 90, mt: 2, ml: 2 }} />
+      <Avatar src={props.avatar} sx={{ width: 90, height: 90, mt: 2, ml: 2 }} />
 
       <Typography variant="body1" sx={{ color: "#424242", mt: 2, ml: 2 }}>
         Name:

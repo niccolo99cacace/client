@@ -1,41 +1,43 @@
-import React, { useState } from "react";
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
-import { styled } from '@mui/material/styles';
-import TableCell from '@mui/material/TableCell';
-import Paper from '@mui/material/Paper';
-import { AutoSizer, Column, Table } from 'react-virtualized';
-import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
+import React from "react";
+import PropTypes from "prop-types";
+import clsx from "clsx";
+import { styled } from "@mui/material/styles";
+import TableCell from "@mui/material/TableCell";
+import Paper from "@mui/material/Paper";
+import { AutoSizer, Column, Table } from "react-virtualized";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import ClearIcon from "@mui/icons-material/Clear";
+import { red } from "@mui/material/colors";
 
 const classes = {
-  flexContainer: 'ReactVirtualizedDemo-flexContainer',
-  tableRow: 'ReactVirtualizedDemo-tableRow',
-  tableRowHover: 'ReactVirtualizedDemo-tableRowHover',
-  tableCell: 'ReactVirtualizedDemo-tableCell',
-  noClick: 'ReactVirtualizedDemo-noClick',
+  flexContainer: "ReactVirtualizedDemo-flexContainer",
+  tableRow: "ReactVirtualizedDemo-tableRow",
+  tableRowHover: "ReactVirtualizedDemo-tableRowHover",
+  tableCell: "ReactVirtualizedDemo-tableCell",
+  noClick: "ReactVirtualizedDemo-noClick",
 };
 
-const styles = ({ theme }) => ({ 
-
-  '& .ReactVirtualized__Table__headerRow': {
-    ...(theme.direction === 'rtl' && {
-      paddingLeft: '0 !important',
+const styles = ({ theme }) => ({
+  "& .ReactVirtualized__Table__headerRow": {
+    ...(theme.direction === "rtl" && {
+      paddingLeft: "0 !important",
     }),
-    ...(theme.direction !== 'rtl' && {
+    ...(theme.direction !== "rtl" && {
       paddingRight: undefined,
     }),
   },
   [`& .${classes.flexContainer}`]: {
-    display: 'flex',
-    alignItems: 'center',
-    boxSizing: 'border-box',
+    display: "flex",
+    alignItems: "center",
+    boxSizing: "border-box",
   },
   [`& .${classes.tableRow}`]: {
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   [`& .${classes.tableRowHover}`]: {
-    '&:hover': {
+    "&:hover": {
       backgroundColor: theme.palette.grey[200],
     },
   },
@@ -43,16 +45,16 @@ const styles = ({ theme }) => ({
     flex: 1,
   },
   [`& .${classes.noClick}`]: {
-    cursor: 'initial',
+    cursor: "initial",
   },
 });
 
 class MuiVirtualizedTable extends React.PureComponent {
   static defaultProps = {
     //altezza della prima riga con gli elementi fissi
-    headerHeight: 48,
+    headerHeight: 30,
     //altezza di ogni riga
-    rowHeight: 48,
+    rowHeight: 30,
   };
 
   getRowClassName = ({ index }) => {
@@ -75,8 +77,8 @@ class MuiVirtualizedTable extends React.PureComponent {
         style={{ height: rowHeight }}
         align={
           (columnIndex != null && columns[columnIndex].numeric) || false
-            ? 'right'
-            : 'left'
+            ? "right"
+            : "left"
         }
       >
         {cellData}
@@ -90,10 +92,14 @@ class MuiVirtualizedTable extends React.PureComponent {
     return (
       <TableCell
         component="div"
-        className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
+        className={clsx(
+          classes.tableCell,
+          classes.flexContainer,
+          classes.noClick
+        )}
         variant="head"
         style={{ height: headerHeight }}
-        align={columns[columnIndex].numeric || false ? 'right' : 'left'}
+        align={columns[columnIndex].numeric || false ? "right" : "left"}
       >
         <span>{label}</span>
       </TableCell>
@@ -107,12 +113,12 @@ class MuiVirtualizedTable extends React.PureComponent {
         {({ height, width }) => (
           <Table
             //altezza totale
-            height={200}
+            height={height}
             //largezza totale
             width={width}
             rowHeight={rowHeight}
             gridStyle={{
-              direction: 'inherit',
+              direction: "inherit",
             }}
             headerHeight={headerHeight}
             {...tableProps}
@@ -149,7 +155,7 @@ MuiVirtualizedTable.propTypes = {
       label: PropTypes.string.isRequired,
       numeric: PropTypes.bool,
       width: PropTypes.number.isRequired,
-    }),
+    })
   ).isRequired,
   headerHeight: PropTypes.number,
   onRowClick: PropTypes.func,
@@ -160,71 +166,72 @@ const VirtualizedTable = styled(MuiVirtualizedTable)(styles);
 
 // ---
 
-
-
-
-
 export default function DataTable(props) {
-
-
   return (
-    
     <React.Fragment>
+      <Box sx={{ height: "8%", display: "flex", flexDirection: "row" }}>
+        <Typography variant="body 2" sx={{ flexGrow: 1 }}>
+          DATA TABLE
+        </Typography>
 
+        <IconButton
+          color="secondary"
+          onClick={props.booleanCheckDataTable}
+          size="small"
+        >
+          <ClearIcon fontSize="small" sx={{ color: red[700] }} />
+        </IconButton>
+      </Box>
 
-      {props.dataTable && (
-
-    <Paper style={{ height: 400, width: 400 }}>
-      <VirtualizedTable
-        rowCount={props.patientExams}
-        rowGetter={({ index }) => props.patientExams1[index] }
-        columns={[
-          {
-            width: 200,
-            label: 'DATA',
-            dataKey: 'birthString',
-          },
-          {
-            width: 120,
-            label: 'height',
-            dataKey: 'height',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'weight',
-            dataKey: 'weight',
-            numeric: true,
-          },
-           {
-            width: 120,
-            label: 'rz',
-            dataKey: 'rz',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'pha',
-            dataKey: 'pha',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'z',
-            dataKey: 'z',
-            numeric: true,
-          },
-          {
-            width: 120,
-            label: 'tbw',
-            dataKey: 'tbw',
-            numeric: true,
-          }, 
-        ]}
-      />
-    </Paper>
-   
-      )}
+      <Paper style={{ height: "92%", width: "100%" }}>
+        <VirtualizedTable
+          rowCount={props.patientExams}
+          rowGetter={({ index }) => props.patientExams1[index]}
+          columns={[
+            {
+              width: 200,
+              label: "DATA",
+              dataKey: "birthString",
+            },
+            {
+              width: 120,
+              label: "height",
+              dataKey: "height",
+              numeric: true,
+            },
+            {
+              width: 120,
+              label: "weight",
+              dataKey: "weight",
+              numeric: true,
+            },
+            {
+              width: 120,
+              label: "rz",
+              dataKey: "rz",
+              numeric: true,
+            },
+            {
+              width: 120,
+              label: "pha",
+              dataKey: "pha",
+              numeric: true,
+            },
+            {
+              width: 120,
+              label: "z",
+              dataKey: "z",
+              numeric: true,
+            },
+            {
+              width: 120,
+              label: "tbw",
+              dataKey: "tbw",
+              numeric: true,
+            },
+          ]}
+        />
+      </Paper>
     </React.Fragment>
   );
 }

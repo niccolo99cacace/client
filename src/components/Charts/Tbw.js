@@ -6,28 +6,28 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { red } from "@mui/material/colors";
 import Paper from "@mui/material/Paper";
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
-export default function HeartRespRate(props) {
+//  total body water    and   fat free mass (massa magra)
+function Tbw(props) {
   return (
     <React.Fragment>
       <Paper style={{ height: "100%", width: "100%" }}>
-        <Box sx={{ height: "8%", display: "flex", flexDirection: "row" }}>
+        <Box sx={{ height: "8%", display: "flex" }}>
           <Typography variant="body 2" sx={{ flexGrow: 1 }}>
-            HEART-RESP RATE
+          TOTAL BODY WATER
           </Typography>
 
           <IconButton
             color="secondary"
-            onClick={props.booleanCheckHeartRespRate}
+            onClick={props.booleanCheckTbw}
             size="small"
           >
             <ClearIcon fontSize="small" sx={{ color: red[700] }} />
@@ -35,28 +35,22 @@ export default function HeartRespRate(props) {
         </Box>
 
         <ResponsiveContainer height="92%">
-          <BarChart data={props.dataClinicalAnalysis}>
+          <AreaChart data={props.patientExams} syncId="anyId">
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="birthString" />
-            <YAxis
-              yAxisId="left"
-              orientation="left"
-              stroke="#8884d8"
-              domain={[0, 140]}
-            />
-            <YAxis
-              yAxisId="right"
-              orientation="right"
-              stroke="#82ca9d"
-              domain={[0, 45]}
-            />
+            <YAxis type="number" domain={[20, 70]} />
             <Tooltip />
-            <Legend />
-            <Bar yAxisId="left" dataKey="Heart rate" fill="#8884d8" />
-            <Bar yAxisId="right" dataKey="Resp rate" fill="#82ca9d" />
-          </BarChart>
+            <Area
+              type="monotone"
+              dataKey="tbw"
+              stroke="#8884d8"
+              fill="#8884d8"
+            />
+          </AreaChart>
         </ResponsiveContainer>
       </Paper>
     </React.Fragment>
   );
 }
+
+export default Tbw;
