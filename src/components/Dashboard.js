@@ -293,7 +293,6 @@ function Dashboard(props) {
 
   useEffect(() => {
     
-    // wrap your async call here
     const auth = async () => {
       const res = await authControl();
       if (res.hasOwnProperty("error") === true)
@@ -301,8 +300,6 @@ function Dashboard(props) {
     };
 
     auth();
-
-//per ripristinare il valore dei bottoni
     const buttonsRec = async () => {
       const l = await recoveryButtons();
        setSearchForm(l.user.searchForm);
@@ -313,15 +310,9 @@ function Dashboard(props) {
        setHeartRespRate(l.user.heartRespRate);
        setBunChart(l.user.bunChart);
        setBMIChart(l.user.bMIChart);
-       setDataClinicalAnalysisButton(l.user.dataClinicalAnalysisButton);
-       
+       setDataClinicalAnalysisButton(l.user.dataClinicalAnalysisButton); 
     };
-
-
-    buttonsRec();  
-    
- 
-    
+    buttonsRec();   
   }, []);
 
   const log_out = async () => {
@@ -437,6 +428,30 @@ function Dashboard(props) {
                   <Checkbox
                     checked={dataTable}
                     onChange={booleanCheckDataTable}
+                  />
+                </MenuItem>
+
+                <MenuItem >
+                  GENETIC ANALYSES
+                  <Checkbox
+                  />
+                </MenuItem>
+
+                <MenuItem >
+                BLOOD COUNT
+                  <Checkbox
+                  />
+                </MenuItem>
+
+                <MenuItem >
+                  URINE ANALYSIS
+                  <Checkbox
+                  />
+                </MenuItem>
+
+                <MenuItem >
+                  ALLERGY TEST
+                  <Checkbox
                   />
                 </MenuItem>
               </Menu>
